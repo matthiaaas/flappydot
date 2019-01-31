@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#eb495a">
+
+    <!-- Normal -->
+    <meta property="og:site_name" content="matthias.works">
+    <meta property="og:title" content="flappy dot">
+    <meta property="og:description" content="A simple game">
+    <meta property="og:url" content="https://space.matthias.works/demo/flappydot">
+    <meta property="og:image" content="https://matthias.works/preview.png">
+
+    <title>Flappy Dot</title>
+
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css"></link>
+  </head>
+  <body>
+    <header>
+      <div class="head_bar">
+        <div class="container">
+          Matthias, Januar 2019
+        </div>
+      </div>
+    </header>
+
+    <section id="flappydot">
+      <div class="container">
+        <div class="game">
+          <div class="score">
+            <h1 id="score">0</h1>
+            <h2 id="best_score">0</h2>
+          </div>
+          <div class="game_area">
+            <canvas id="game_area"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mobile">
+      <h1>too small</h1>
+      <h2>we're sorry</h2>
+      <p class="text with_margin_top">
+        This game isn't optimized for mobile devices.
+      </p>
+    </section>
+
+    <div id="popup">
+      <h3>Cookies</h3>
+      <p class="text">Indem du fortfährst, stimmst du der Verwendung von Cookies zu. <a href="https://matthias.works/privacy">Mehr erfahren</a></p>
+      <a class="btn orange" onclick="document.getElementById('popup').style.visibility = 'hidden'">Verstanden</a>
+    </div>
+
+    <!-- load the js game file -->
+    <script type="text/javascript" src="assets/js/game.js"></script>
+  </body>
+</html>

@@ -1,0 +1,236 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+html, body {
+  background: #f5f6Fa;
+}
+
+
+/* selection */
+
+::-moz-selection {
+  color: white;
+  background: #EB495A;
+}
+::selection {
+  color: white;
+  background: #EB495A;
+}
+
+
+/* btn */
+
+.btn {
+	-webkit-transition: all ease 0.2s;
+	transition: all ease 0.2s;
+	transform: translateX(0);
+	cursor: pointer;
+	display: inline-block;
+	font-family: 'Poppins';
+	font-weight: 600;
+	font-size: 12px;
+	line-height: 1.5;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: white;
+	padding: 10px 25px;
+	background: #EB495A;
+}
+.btn:hover {
+	color: white;
+	background: #D54B59;
+	transform: translateX(5px);
+}
+
+
+/* text */
+
+h1 {
+	font-family: 'Playfair Display';
+	font-weight: 900;
+	font-size: 48px;
+	line-height: 1.2;
+	color: #404040;
+}
+h1 .h1_colored {
+	font-weight: 500;
+	color: #EB495A;
+}
+h2 {
+	font-family: 'Playfair Display';
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 1.4;
+	color: #9FA2AD;
+}
+h3 {
+	font-family: 'Playfair Display';
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 1.7;
+	color: #404040;
+}
+h4 {
+	font-family: 'Poppins';
+	font-weight: 800;
+	font-size: 12px;
+	line-height: 1.5;
+	text-transform: uppercase;
+	color: /*#9FA2AD*/#EB495A;
+}
+.text {
+	font-family: 'Raleway';
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 1.8;
+	letter-spacing: 0.3px;
+	color: /*#9FA2AD*/ #A5A8B3;
+}
+a {
+	color: inherit;
+	text-decoration: none;
+}
+a:hover {
+	color: #404040;
+}
+.centered {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.container {
+	width: 70%;
+	margin: 0 auto;
+}
+
+.with_margin_top {
+	margin-top: 5px;
+}
+
+
+/* POP UP */
+
+#popup {
+  display: block;
+  z-index: 100;
+  max-width: 350px;
+  visibility: visible;
+  right: 10px;
+  bottom: 10px;
+  position: fixed;
+  width: auto;
+  padding: 25px;
+  background: white;
+}
+#popup p {
+	margin: 10px 0 15px 0;
+}
+
+
+/* NAV */
+
+header .head_bar {
+	font-family: 'Raleway';
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 1.8;
+	letter-spacing: 0.3px;
+	color: /*#9FA2AD*/ #A5A8B3;
+	padding: 35px 0;
+	background: white;
+}
+
+
+/* GAME */
+
+#flappydot .game {
+  width: 100%;
+}
+#flappydot .game .score {
+	margin: 25px auto;
+	text-align: center;
+}
+#flappydot .game .score #score {
+	display: inline;
+}
+#flappydot .game .score #best_score {
+	margin-left: 10px;
+	display: inline;
+}
+#flappydot .game .game_area {
+	margin: 0 auto;
+}
+#flappydot canvas#game_area {
+	padding: 0;
+  display: block;
+  margin: 0 auto;
+  background: white;
+}
+
+
+#mobile {
+	display: none;
+	text-align: center;
+}
+
+@media screen and (max-width: 725px) {
+	.container {
+		width: 90%;
+	}
+}
+
+@media screen and (max-width: 554px) {
+	#flappydot {
+		display: none;
+	}
+	#mobile {
+		display: block;
+	}
+}
