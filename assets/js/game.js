@@ -5,6 +5,7 @@ let canvas = document.getElementById('game_area');
 canvas.width = 500;
 canvas.height = 600;
 
+
 /**
  * Diese Funktion nimmt einen Pixel Wert entgegebn und gibt ihn numerisch zurück
  * @param positionString The String which contains a size meassured in Pixels
@@ -65,7 +66,13 @@ function setup() {
   drawObject();
 
   // new event listener check key status
-  window.addEventListener('keydown', keyPress);
+    if (!isTouchDevice()) {
+        window.addEventListener('keydown', () => keyPress(false));
+        canvas.addEventListener("click", () => keyPress(true));
+    } else {
+        canvas.addEventListener("touchstart", () => keyPress(true));
+    }
+
 }
 
 function reset() {
@@ -96,7 +103,9 @@ function reset() {
   updateScore(score.actual);
 }
 
-function keyPress() {
+function keyPress(clickMode) {
+    canvas.requestFullscreen();
+    if (clickMode) return velocity += (lift * 1.25);
   velocity += lift;
 }
 
@@ -194,4 +203,18 @@ function updateScore(value) {
 function updateBestScore(value) {
   // write text to scoreboard
   document.getElementById('best_score').innerHTML = value;
+}
+
+function isTouchDevice() {
+    return 'ontouchstart' in window        // works on most browsers
+        || navigator.maxTouchPoints;       // works on IE10/11 and Surface
+}
+
+if (localStorage.getItem("cookieConsent") === "true") {
+    document.getElementById('popup').style.visibility = 'hidden'
+}
+
+function consentToCookies() {
+    document.getElementById('popup').style.visibility = 'hidden';
+    localStorage.setItem('cookieConsent', 'true')
 }

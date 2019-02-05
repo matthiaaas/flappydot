@@ -226,11 +226,11 @@ header .head_bar {
 	}
 }
 
-@media screen and (max-width: 554px) {
-	#flappydot {
-		display: none;
-	}
-	#mobile {
-		display: block;
-	}
-}
+/*@media screen and (max-width: 554px) {*/
+/*#flappydot {*/
+/*display: none;*/
+/*}*/
+/*#mobile {*/
+/*display: block;*/
+/*}*/
+/*}*/
