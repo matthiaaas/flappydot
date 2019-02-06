@@ -1,44 +1,52 @@
 // get the canvas element
-let canvas = document.getElementById('game_area');
+var canvas = document.getElementById("game_area");
 
 // canvas variables
-canvas.width = 500;
-canvas.height = 600;
-
-
-/**
- * Diese Funktion nimmt einen Pixel Wert entgegebn und gibt ihn numerisch zurück
- * @param positionString The String which contains a size meassured in Pixels
- * @returns Number
- */
+var canvas_width = 500;
+var canvas_height = 600;
 
 // ctx
-const ctx = canvas.getContext('2d');
+var ctx = canvas.getContext("2d");
 
 // object variables
-let object = {x: 150, y: 150, radius: 15, color: '#eb495a'};
-
+// position
+var obj_x = 150;
+var obj_y = 150;
+var obj_radius = 15;
+// color
+var obj_color = "#eb495a";
 // gravity
-const gravity = 0.6;
-let velocity = 0;
-const lift = -16;
+var gravity = 0.6;
+// movement
+var velocity = 0;
+var lift = -16;
 
-let obstacle = {speed: 2, width: 50, x: canvas.width, gap: 150, color: '#lalala', difficulty: 0.1, bottom: 0, top: 0};
+// obstacles variables
+var obs_speed = 2;
+var obs_width = 50;
+var obs_x = canvas_width;
+var obs_gap = 150;
+// obstacle color
+var obs_color = "#1a1a1a";
+// the added speed
+var obs_difficulity = 0.1;
+
 // game over ?
-let gameOver = false;
+var game_over = false;
 
 // score
-let score = {actual: 0, best: 0};
+var score = 0;
+var best_score = 0;
 
 // call the (loop) functions
 setup();
 main();
 
-function main() {
+function main(){
   // frames / repeats
   window.requestAnimationFrame(main);
 
-  if (!gameOver) {
+  if (game_over == false){
     // clears the game board
     clearArea();
 
@@ -51,12 +59,16 @@ function main() {
     updateObstacle();
     // draw the obstacle to new position
     drawObstacle();
-  } else {
+  }
+  else {
     reset();
   }
 }
 
-function setup() {
+function setup(){
+  // canvas setup
+  canvas.width = canvas_width;
+  canvas.height = canvas_height;
 
   // obstacle setup
   setupObstacle();
@@ -66,155 +78,134 @@ function setup() {
   drawObject();
 
   // new event listener check key status
-    if (!isTouchDevice()) {
-        window.addEventListener('keydown', () => keyPress(false));
-        canvas.addEventListener("click", () => keyPress(true));
-    } else {
-        canvas.addEventListener("touchstart", () => keyPress(true));
-    }
-
+  window.addEventListener("keydown", keyPress);
 }
 
-function reset() {
+function reset(){
   // global game reset
   // object variables
   // position
-  object.x = 150;
-  object.y = 150;
+  obj_x = 150;
+  obj_y = 150;
 
   // movement
   velocity = 0;
 
   // obstacles variables
-  obstacle.speed = 2;
-  obstacle.x = canvas.width;
+  obs_speed = 2;
+  obs_x = canvas_width;
 
   // game over ?
-  gameOver = false;
+  game_over = false;
 
   // update best score
-  // if (score > best_score){
-  //  score.best = score.actual;
-  //  updateBestScore(score.best);
-  // }
+  //if (score > best_score){
+  //  best_score = score;
+  //  updateBestScore(best_score);
+  //}
 
   // reset score
-  score.actual = 0;
-  updateScore(score.actual);
+  score = 0;
+  updateScore(score);
 }
 
-function keyPress(clickMode) {
-    canvas.requestFullscreen();
-    if (clickMode) return velocity += (lift * 1.25);
+function keyPress(){
   velocity += lift;
 }
 
-function setupObstacle() {
+function setupObstacle(){
   // setup the obstacle
   // top bar
-  obstacle.top = Math.floor(Math.random() * (canvas.height) - obstacle.gap);
+  obs_top = Math.floor(Math.random() * (canvas_height - obs_gap));
   // bottom bar
-  obstacle.bottom = canvas.height - obstacle.top + 50;
+  obs_bot = canvas_height - obs_top + 50;
 }
 
-function drawObject() {
+function drawObject(){
   // start a path
   ctx.beginPath();
-  ctx.arc(object.x, object.y, object.radius, 0, Math.PI * 2, false);
+  ctx.arc(obj_x, obj_y, obj_radius, 0, Math.PI * 2, false);
   // color it red
-  ctx.strokeStyle = object.color;
-  ctx.fillStyle = object.color;
+  ctx.strokeStyle = obj_color;
+  ctx.fillStyle = obj_color;
   // finish / stroke
   ctx.fill();
   ctx.stroke();
 }
 
-function drawObstacle() {
+function drawObstacle(){
   // use obstacle color
-  ctx.fillStyle = obstacle.color;
+  ctx.fillStyle = obs_color;
   // fill the top bar
-  ctx.fillRect(obstacle.x, 0, obstacle.width, obstacle.top);
+  ctx.fillRect(obs_x, 0, obs_width, obs_top);
   // fill the bottom bar
-  ctx.fillRect(obstacle.x, (obstacle.top + obstacle.gap), obstacle.width, obstacle.bottom);
+  ctx.fillRect(obs_x, (obs_top + obs_gap), obs_width, obs_bot);
 }
 
-function updateObject() {
+function updateObject(){
   // new position
   velocity += gravity;
   velocity *= 0.9;
-  object.y += velocity;
+  obj_y += velocity;
 
   // if object hits bottom
-  if (object.y + object.radius > canvas.height) {
-    onGameOver();
+  if (obj_y + obj_radius > canvas_height){
+    gameOver();
   }
 
   // if object hits obstacle
-  if (object.x >= obstacle.x && object.x <= (obstacle.x + obstacle.width)) {
-    if (object.y <= obstacle.top) {
-      onGameOver();
-    } else if (object.y >= (obstacle.top + obstacle.gap)) {
-      onGameOver();
+  if (obj_x >= obs_x && obj_x <= (obs_x + obs_width)){
+    if (obj_y <= obs_top){
+      gameOver();
+    }
+    else if (obj_y >= (obs_top + obs_gap)){
+      gameOver();
     }
   }
 }
 
-function updateObstacle() {
+function updateObstacle(){
   // new obstacle position
-  obstacle.x -= obstacle.speed;
+  obs_x -= obs_speed;
 
   // obstacle is invisible
-  if (obstacle.x <= (0 - obstacle.width)) {
+  if (obs_x <= (0 - obs_width)){
     // update score
-    score.actual++;
-    updateScore(score.actual);
+    score++;
+    updateScore(score);
 
     // update the best score too
-    if (score.actual > score.best) {
-      score.best = score.actual;
-      updateBestScore(score.best);
+    if (score > best_score){
+      best_score = score;
+      updateBestScore(best_score);
     }
 
     // reset obstacle
-    obstacle.x = canvas.width;
+    obs_x = canvas_width;
 
     // make the game faster
-    obstacle.speed += obstacle.difficulty;
+    obs_speed += obs_difficulity;
 
     // generate new obstacle
     setupObstacle();
   }
 }
 
-function onGameOver() {
-  gameOver = true;
+function gameOver(){
+  game_over = true;
 }
 
-function clearArea() {
+function clearArea(){
   // clear the canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas_width, canvas_height);
 }
 
-function updateScore(value) {
+function updateScore(value){
   // write text to scoreboard
-  document.getElementById('score').innerHTML = value;
+  document.getElementById("score").innerHTML = value;
 }
 
-function updateBestScore(value) {
+function updateBestScore(value){
   // write text to scoreboard
-  document.getElementById('best_score').innerHTML = value;
-}
-
-function isTouchDevice() {
-    return 'ontouchstart' in window        // works on most browsers
-        || navigator.maxTouchPoints;       // works on IE10/11 and Surface
-}
-
-if (localStorage.getItem("cookieConsent") === "true") {
-    document.getElementById('popup').style.visibility = 'hidden'
-}
-
-function consentToCookies() {
-    document.getElementById('popup').style.visibility = 'hidden';
-    localStorage.setItem('cookieConsent', 'true')
+  document.getElementById("best_score").innerHTML = value;
 }

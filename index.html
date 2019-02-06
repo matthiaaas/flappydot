@@ -20,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="assets/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css"></link>
   </head>
   <body>
     <header>
@@ -45,18 +45,18 @@
       </div>
     </section>
 
-    <!--<section id="mobile">-->
-    <!--<h1>too small</h1>-->
-    <!--<h2>we're sorry</h2>-->
-    <!--<p class="text with_margin_top">-->
-    <!--This game isn't optimized for mobile devices.-->
-    <!--</p>-->
-    <!--</section>-->
+    <section id="mobile">
+      <h1>too small</h1>
+      <h2>we're sorry</h2>
+      <p class="text with_margin_top">
+        This game isn't optimized for mobile devices.
+      </p>
+    </section>
 
     <div id="popup">
       <h3>Cookies</h3>
       <p class="text">Indem du fortfährst, stimmst du der Verwendung von Cookies zu. <a href="https://matthias.works/privacy">Mehr erfahren</a></p>
-      <a class="btn orange" onclick="consentToCookies()">Verstanden</a>
+      <a class="btn orange" onclick="document.getElementById('popup').style.visibility = 'hidden'">Verstanden</a>
     </div>
 
     <!-- load the js game file -->
