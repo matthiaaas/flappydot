@@ -5,13 +5,6 @@ let canvas = document.getElementById('game_area');
 canvas.width = 500;
 canvas.height = 600;
 
-
-/**
- * Diese Funktion nimmt einen Pixel Wert entgegebn und gibt ihn numerisch zurück
- * @param positionString The String which contains a size meassured in Pixels
- * @returns Number
- */
-
 // ctx
 const ctx = canvas.getContext('2d');
 
@@ -23,34 +16,49 @@ const gravity = 0.6;
 let velocity = 0;
 const lift = -16;
 
-let obstacle = {speed: 2, width: 50, x: canvas.width, gap: 150, color: '#lalala', difficulty: 0.1, bottom: 0, top: 0};
+let obstacle = {speed: 2, width: 50, x: canvas.width, gap: 150, color: '#1a1a1a', difficulty: 0.1, bottom: 0, top: 0};
 // game over ?
 let gameOver = false;
 
 // score
 let score = {actual: 0, best: 0};
+let animationRequestID = 0;
+
 
 // call the (loop) functions
 setup();
 main();
 
+
+try{
+if (window.hasOwnProperty('localStorage')){
+  if (window.localStorage.getItem("cookieConsent") === "true") {
+    document.getElementById('popup').style.display = 'none'
+  }  
+}
+}catch(e){
+  console.error(e)
+}
+
+
+
 function main() {
   // frames / repeats
-  window.requestAnimationFrame(main);
+  animationRequestID = window.requestAnimationFrame(main);
 
   if (!gameOver) {
     // clears the game board
     clearArea();
 
-    // update the game object position
-    updateObject();
-    // draw the object to new position
-    drawObject();
-
     // update obstacle position
     updateObstacle();
     // draw the obstacle to new position
     drawObstacle();
+
+    // update the game object position
+    updateObject();
+    // draw the object to new position
+    drawObject();
   } else {
     reset();
   }
@@ -104,7 +112,6 @@ function reset() {
 }
 
 function keyPress(clickMode) {
-    canvas.requestFullscreen();
     if (clickMode) return velocity += (lift * 1.25);
   velocity += lift;
 }
@@ -148,12 +155,15 @@ function updateObject() {
   if (object.y + object.radius > canvas.height) {
     onGameOver();
   }
+  
+  const radiusIncludedX = (object.x + object.radius);
+  const radiusIncludedY = (object.y + object.radius)
 
-  // if object hits obstacle
-  if (object.x >= obstacle.x && object.x <= (obstacle.x + obstacle.width)) {
+  // if object hits obstacle && object.x <= (obstacle.x + obstacle.width)
+  if (object.x + object.radius >= obstacle.x && (object.x - object.radius) <= (obstacle.x+ obstacle.width) ) {
     if (object.y <= obstacle.top) {
       onGameOver();
-    } else if (object.y >= (obstacle.top + obstacle.gap)) {
+    } else if (radiusIncludedY >= (obstacle.top + obstacle.gap)) {
       onGameOver();
     }
   }
@@ -187,7 +197,10 @@ function updateObstacle() {
 }
 
 function onGameOver() {
+  window.cancelAnimationFrame(animationRequestID);
   gameOver = true;
+  reset();
+  main();
 }
 
 function clearArea() {
@@ -210,11 +223,7 @@ function isTouchDevice() {
         || navigator.maxTouchPoints;       // works on IE10/11 and Surface
 }
 
-if (localStorage.getItem("cookieConsent") === "true") {
-    document.getElementById('popup').style.visibility = 'hidden'
-}
-
 function consentToCookies() {
-    document.getElementById('popup').style.visibility = 'hidden';
-    localStorage.setItem('cookieConsent', 'true')
+  document.getElementById('popup').style.visibility = 'hidden';
+  if (window.hasOwnProperty('localStorage')) window.localStorage.setItem('cookieConsent', 'true')
 }
